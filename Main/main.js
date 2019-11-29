@@ -1,20 +1,20 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-28 19:51:18
+ * @LastEditTime: 2019-11-29 09:44:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
  */
 
  /// config instance
- const appconfig = require('./config');
+ const appconfig = require('../Config/config');
 
  /// mysql instance
- const mysql = require('./ConnectDB');
+ const mysql = require('../UTI/ConnectDB');
 
  /// api instance
- const app = require('./ConnectAPI');
+ const app = require('../UTI/ConnectAPI');
 
  /// db config 
  var dbinstance = mysql.mysqlconnect();

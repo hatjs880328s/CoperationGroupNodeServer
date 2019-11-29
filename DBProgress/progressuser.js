@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-29 13:40:37
+ * @LastEditTime: 2019-11-29 14:55:16
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -32,9 +32,15 @@ function getUserWith(connection, uid, any) {
 }
 
 /// 添加一个用户，传入一个user json obj
-function addUserWith(usermodel, any) {
-    var sql = 'insert into users values (\'${usermodel[""]}\', \'\', \'\', \'\')';
-    console.log('halo.moto, ${sql}');
+function addUserWith(connection, usermodel, any) {
+    var sql = `insert into users values (\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', \'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
+    connection.query(sql, function(err, result) {
+        if (err) {
+            any(false);
+        } else {
+            any(true);
+        }
+    });
 }
 
  module.exports = {getAlluser, getUserWith, addUserWith};

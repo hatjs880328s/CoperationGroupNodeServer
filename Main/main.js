@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-29 14:29:28
+ * @LastEditTime: 2019-11-29 15:07:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -26,7 +26,7 @@ app.config();
 const userdbIns = require('../DBProgress/progressuser');
 
 /// get all user infos
-app.apiconfig.get('/users', function (err, res) {
+app.apiconfig.get('/user', function (err, res) {
     console.log('have someone request users');
     userdbIns.getAlluser(dbinstance, function (result) {
         res.json(result);
@@ -36,21 +36,11 @@ app.apiconfig.get('/users', function (err, res) {
 /// post req
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-app.apiconfig.post('/post', urlencodedParser, function (req, res) {
+app.apiconfig.post('/user', urlencodedParser, function (req, res) {
     console.log(req.body);
-    console.log(req.body.name);
-    var json = JSON.stringify({
-        msg: "成功",
-        result: [{
-            "name": "菜鸟教程",
-            "site": "http://www.runoob.com"
-        }, {
-            "name": "新手教程",
-            "site": "csdnnnn"
-        }],
-        status: 1
+    userdbIns.addUserWith(dbinstance, req.body, function(result) {
+        res.json({'result': result});
     });
-    res.end(json);
 });
 
 /// 开启监听

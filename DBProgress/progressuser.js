@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-29 14:55:16
+ * @LastEditTime: 2019-11-29 16:08:16
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -43,4 +43,17 @@ function addUserWith(connection, usermodel, any) {
     });
 }
 
- module.exports = {getAlluser, getUserWith, addUserWith};
+/// 更新用户信息
+function updateUserWith(connection, usermodel, any) {
+    var sql = `update users set nickname = '${usermodel["nickname"]}', email = '${usermodel["email"]}', icon = '${usermodel["icon"]}' where userid = '${usermodel["userid"]}';`;
+    console.log(sql);
+    connection.query(sql, function(err, result) {
+        if (err) {
+            any(false);
+        } else {
+            any(true);
+        }
+    });
+}
+
+ module.exports = {getAlluser, getUserWith, addUserWith, updateUserWith};

@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-29 15:07:29
+ * @LastEditTime: 2019-11-29 15:08:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -36,7 +36,7 @@ app.apiconfig.get('/user', function (err, res) {
 /// post req
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-app.apiconfig.post('/user', urlencodedParser, function (req, res) {
+app.apiconfig.put('/user', urlencodedParser, function (req, res) {
     console.log(req.body);
     userdbIns.addUserWith(dbinstance, req.body, function(result) {
         res.json({'result': result});

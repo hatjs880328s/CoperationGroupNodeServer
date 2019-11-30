@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-29 16:11:40
+ * @LastEditTime: 2019-11-30 10:54:03
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -33,7 +33,8 @@ function getUserWith(connection, uid, any) {
 
 /// 添加一个用户，传入一个user json obj
 function addUserWith(connection, usermodel, any) {
-    var sql = `insert into users values (\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', \'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
+    var sql = `insert into users values ` 
+    + `(\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', \'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
     connection.query(sql, function(err, result) {
         if (err) {
             any(false);
@@ -45,7 +46,9 @@ function addUserWith(connection, usermodel, any) {
 
 /// 更新用户信息
 function updateUserWith(connection, usermodel, any) {
-    var sql = `update users set nickname = '${usermodel["nickname"]}', email = '${usermodel["email"]}', icon = '${usermodel["icon"]}' where userid = '${usermodel["userid"]}';`;
+    var sql = `update users set nickname ` 
+    + `= '${usermodel["nickname"]}', email = '${usermodel["email"]}', ` 
+    + `icon = '${usermodel["icon"]}' where userid = '${usermodel["userid"]}';`;
     console.log(sql);
     connection.query(sql, function(err, result) {
         if (err) {

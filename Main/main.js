@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-29 16:25:16
+ * @LastEditTime: 2019-11-30 10:46:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -26,9 +26,13 @@ app.config();
 const userdbIns = require('../DBProgress/progressuser');
 
 
-/// 用户的
+/// 用户的api服务监听
 var userAPI = require('../APIProgress/apiuserprogress');
 userAPI.creatorUser(app, userdbIns, dbinstance);
+userAPI.updateUser(app, userdbIns, dbinstance);
+userAPI.getUser(app, userdbIns, dbinstance);
+
+
 
 /// 开启监听
 var server = app.apiconfig.listen(8081, appconfig.hostapi, function () {

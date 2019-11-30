@@ -1,14 +1,15 @@
 /*
- * @Author: noah shan
- * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-30 11:31:45
+ * @Author: your name
+ * @Date: 2019-11-30 11:24:12
+ * @LastEditTime: 2019-11-30 11:25:08
  * @LastEditors: Please set LastEditors
- * @Description: 处理user表所有操作
- * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
+ * @Description: file 的操作
+ * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
  */
 
+
  /// 获取所有用户信息
-function getAlluser(connection, any) {
+function getAllFile(connection, any) {
     var sql = 'select * from users';
     connection.query(sql, function(err, result) {
         if (err) {
@@ -20,7 +21,7 @@ function getAlluser(connection, any) {
 }
 
 /// 根据用户id获取用户信息
-function getUserWith(connection, uid, any) {
+function getFileWith(connection, uid, any) {
     var sql = 'select * from users where userid = \'' + uid + '\';';
     connection.query(sql, function(err, result) {
         if (err) {
@@ -32,7 +33,7 @@ function getUserWith(connection, uid, any) {
 }
 
 /// 添加一个用户，传入一个user json obj
-function addUserWith(connection, usermodel, any) {
+function addFileWith(connection, usermodel, any) {
     var sql = `insert into users values ` 
     + `(\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', ` 
     + `\'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
@@ -46,7 +47,7 @@ function addUserWith(connection, usermodel, any) {
 }
 
 /// 更新用户信息
-function updateUserWith(connection, usermodel, any) {
+function updateFileWith(connection, usermodel, any) {
     var sql = `update users set nickname ` 
     + `= '${usermodel["nickname"]}', email = '${usermodel["email"]}', ` 
     + `icon = '${usermodel["icon"]}' where userid = '${usermodel["userid"]}';`;
@@ -61,8 +62,8 @@ function updateUserWith(connection, usermodel, any) {
 }
 
 /// 删除用户信息
-function deleteUser(connection, uid, any) {
-    var sql = `delete from users where userid = '${uid}';`;
+function deleteFile(connection, uid, any) {
+    var sql = `delete users where userid = '${uid}';`;
     console.log(sql);
     connection.query(sql, function(err, result) {
         if (err) {

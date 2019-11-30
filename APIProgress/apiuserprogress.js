@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 16:13:23
- * @LastEditTime: 2019-11-30 11:18:57
+ * @LastEditTime: 2019-11-30 11:29:10
  * @LastEditors: Please set LastEditors
  * @Description: 用户信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apiuserprogress.js
@@ -55,4 +55,15 @@ function getUserwithID(app, userdbIns, dbinstance) {
     })
 }
 
-module.exports = { creatorUser, updateUser, getUser, getUserwithID };
+/// 根据用户id获取用户信息
+function deleteUser(app, userdbIns, dbinstance) {
+    app.apiconfig.delete('/user/:id', function (req, res) {
+        console.log('delete someone user invoke.');
+        var id = req.params.id;
+        userdbIns.deleteUser(dbinstance, id, function(result) {
+            res.json({ 'result': result });
+        })
+    })
+}
+
+module.exports = { creatorUser, updateUser, getUser, getUserwithID, deleteUser };

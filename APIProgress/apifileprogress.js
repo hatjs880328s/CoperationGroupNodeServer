@@ -1,19 +1,19 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-11-30 11:35:34
+ * @LastEditTime: 2019-11-30 13:40:30
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
  */
 
-/// 创建用户信息
+/// 创建file信息
 function creatorFile(app, userdbIns, dbinstance) {
     var bodyParser = require('body-parser');
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.post('/file', urlencodedParser, function (req, res) {
         console.log('create file invoke.');
-        userdbIns.addUserWith(dbinstance, req.body, function (result) {
+        userdbIns.addFileWith(dbinstance, req.body, function(result) {
             res.json({ 'result': result });
         });
     });

@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-30 11:28:02
+ * @LastEditTime: 2019-11-30 13:32:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -24,6 +24,8 @@ app.config();
 
 // users db progress ins
 const userdbIns = require('../DBProgress/progressuser');
+// file db progress ins
+const filedbIns = require('../DBProgress/progressfile');
 
 
 /// 用户的api服务监听
@@ -33,6 +35,9 @@ userAPI.updateUser(app, userdbIns, dbinstance);
 userAPI.getUser(app, userdbIns, dbinstance);
 userAPI.getUserwithID(app, userdbIns, dbinstance);
 userAPI.deleteUser(app, userdbIns, dbinstance);
+
+var fileAPI = require('../APIProgress/apifileprogress');
+fileAPI.creatorFile(app, filedbIns, dbinstance);
 
 
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 11:41:12
+ * @LastEditTime: 2019-11-30 14:08:24
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -32,18 +32,29 @@ function getFileWith(connection, fileid, any) {
     });
 }
 
-/// 添加一个用户，传入一个user json obj
-function addFileWith(connection, filemodel, any) {
-    var sql = `insert into File values ` 
-    + `(\'${filemodel["userid"]}\', \'${filemodel["nickname"]}\', ` 
-    + `\'${filemodel["email"]}\', \'${filemodel["icon"]}\')`;
-    connection.query(sql, function(err, result) {
-        if (err) {
-            any(false);
-        } else {
-            any(true);
-        }
-    });
+/// 添加一个文件，传入一个user json obj
+async function addFileWith(connection, filemodel, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel['tables'] = 'File';
+    sqlModel['query'] = 'insert';
+    sqlModel['data'] = 
+    {'fileid': filemodel["fileid"],
+     'name': filemodel["name"],
+     'description': filemodel["description"],
+     'content': filemodel["content"],
+     'folderid': filemodel["folderid"],
+     'createtime': filemodel["createtime"],
+     'changetime': filemodel["changetime"],
+     'images': filemodel["images"],
+     'currentowner': filemodel["currentowner"],
+     'creator': filemodel["creator"]
+    }
+    sqlModel['where'] = {'type': 'and', 'condition': []}
+
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    any(result);
 }
 
 /// 更新用户信息

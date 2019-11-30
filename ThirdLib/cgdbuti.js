@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-29 10:54:54
- * @LastEditTime: 2019-11-30 11:45:44
+ * @LastEditTime: 2019-11-30 14:10:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/ThirdLib/cgdbuti.js
@@ -82,4 +82,54 @@ var structureAnalysis = function(sqlObj) {
 	return result;
 };
 
-module.exports = {getSQLObject, structureAnalysis, getSQLObjectDic};
+// 传入单条SQL语句
+var ControlAPI_obj_async = function(data, connection) {
+    var sqlObj = structureAnalysis(data);
+    return new Promise((resolved, rejected)=>{
+        generalOperation(connection, sqlObj["sql"], sqlObj["value"], (result)=>{
+            if(result === null){
+                rejected(false);
+            }
+            else{
+                resolved(true);
+            }
+        });
+    });
+}
+
+// sql是语句，args是参数，callback回调函数
+function generalOperation(connection, sql, args, callback) {
+	dataBaseControl(connection, sql, args, callback);
+};
+
+/*
+参数说明：
+sql: SQL语句，string类型
+args：SQL语句中的参数，Array类型
+callback：异步回调函数
+*/
+function dataBaseControl(connection, sql, args, callback){
+    if(args == null || args.length == 0){
+        console.log(sql);
+        connection.query(sql, function(error, results, fields){
+            if(error){
+                console.error(error);
+                callback(null);
+                return;
+            }
+            callback(results);
+        });
+    }
+    else{
+        connection.query(sql, args, function(error, results, fields){
+            if(error){
+                console.error(error);
+                callback(null);
+                return;
+            }
+            callback(results);
+        });
+    }
+}
+
+module.exports = {getSQLObject, structureAnalysis, getSQLObjectDic, ControlAPI_obj_async, generalOperation, dataBaseControl};

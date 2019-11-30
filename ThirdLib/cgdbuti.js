@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-29 10:54:54
- * @LastEditTime: 2019-11-30 14:10:37
+ * @LastEditTime: 2019-11-30 14:39:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/ThirdLib/cgdbuti.js
@@ -84,14 +84,14 @@ var structureAnalysis = function(sqlObj) {
 
 // 传入单条SQL语句
 var ControlAPI_obj_async = function(data, connection) {
-    var sqlObj = structureAnalysis(data);
+	var sqlObj = structureAnalysis(data);
     return new Promise((resolved, rejected)=>{
         generalOperation(connection, sqlObj["sql"], sqlObj["value"], (result)=>{
             if(result === null){
-                rejected(false);
+                rejected(null);
             }
             else{
-                resolved(true);
+                resolved(result);
             }
         });
     });
@@ -110,7 +110,6 @@ callback：异步回调函数
 */
 function dataBaseControl(connection, sql, args, callback){
     if(args == null || args.length == 0){
-        console.log(sql);
         connection.query(sql, function(error, results, fields){
             if(error){
                 console.error(error);

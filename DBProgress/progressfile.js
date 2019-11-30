@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 14:08:24
+ * @LastEditTime: 2019-11-30 14:42:00
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -21,21 +21,23 @@ function getAllFile(connection, any) {
 }
 
 /// 根据用户id获取用户信息
-function getFileWith(connection, fileid, any) {
-    var sql = 'select * from File where fileid = \'' + fileid + '\';';
-    connection.query(sql, function(err, result) {
-        if (err) {
-            any('');
-        } else {
-            any(result);
-        }
-    });
+async function getFileWith(connection, fileid, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "File";
+	sqlModel["data"] = {
+		"*":0
+	};
+    sqlModel['where'] = {'type': 'and', 'condition': [`fileid = '${fileid}'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    console.log(result[0]);
+    any(result[0]);
 }
 
 /// 添加一个文件，传入一个user json obj
 async function addFileWith(connection, filemodel, any) {
     var dbuti = require('../ThirdLib/cgdbuti');
-
     var sqlModel = dbuti.getSQLObject;
     sqlModel['tables'] = 'File';
     sqlModel['query'] = 'insert';
@@ -52,9 +54,8 @@ async function addFileWith(connection, filemodel, any) {
      'creator': filemodel["creator"]
     }
     sqlModel['where'] = {'type': 'and', 'condition': []}
-
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
-    any(result);
+    any(result != null);
 }
 
 /// 更新用户信息

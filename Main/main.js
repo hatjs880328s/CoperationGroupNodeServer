@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-30 13:32:53
+ * @LastEditTime: 2019-11-30 14:19:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -38,7 +38,7 @@ userAPI.deleteUser(app, userdbIns, dbinstance);
 
 var fileAPI = require('../APIProgress/apifileprogress');
 fileAPI.creatorFile(app, filedbIns, dbinstance);
-
+fileAPI.getFilewithID(app, filedbIns, dbinstance);
 
 
 /// 开启监听

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-11-30 13:40:30
+ * @LastEditTime: 2019-11-30 14:38:19
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -45,10 +45,9 @@ function getFile(app, userdbIns, dbinstance) {
 function getFilewithID(app, userdbIns, dbinstance) {
     app.apiconfig.get('/file/:id', function (req, res) {
         console.log('get someone file invoke.');
-        var id = req.params.id;        
-        userdbIns.getUserWith(dbinstance, id, function(result) {
-            console.log(result);
-            res.json(result);
+        var id = req.params.id;
+        userdbIns.getFileWith(dbinstance, id, function(req) {
+            res.json(req)[0];
         });
     })
 }

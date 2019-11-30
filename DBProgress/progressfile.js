@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 14:42:00
+ * @LastEditTime: 2019-11-30 14:45:27
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -9,15 +9,18 @@
 
 
  /// 获取所有用户信息
-function getAllFile(connection, any) {
-    var sql = 'select * from File';
-    connection.query(sql, function(err, result) {
-        if (err) {
-            any('');
-        } else {
-            any(result);
-        }
-    });
+async function getAllFile(connection, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "File";
+	sqlModel["data"] = {
+		"*":0
+	};
+    sqlModel['where'] = {'type': 'and', 'condition': []}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    console.log(result);
+    any(result);
 }
 
 /// 根据用户id获取用户信息

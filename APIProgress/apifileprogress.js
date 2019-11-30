@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-11-30 14:46:35
+ * @LastEditTime: 2019-11-30 15:03:16
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -20,14 +20,14 @@ function creatorFile(app, userdbIns, dbinstance) {
 }
 
 /// 更新用户信息
-function updateFile(app, userdbIns, dbinstance) {
+function updateFile(app, fileDBIns, dbinstance) {
     var bodyParser = require('body-parser');
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.put('/file', urlencodedParser, function (req, res) {
         console.log('update file invoke.');
-        userdbIns.updateUserWith(dbinstance, req.body, function (result) {
+        fileDBIns.updateFileWith(dbinstance, req.body, function(result) {
             res.json({ 'result': result });
-        });
+        })
     });
 }
 
@@ -52,15 +52,15 @@ function getFilewithID(app, userdbIns, dbinstance) {
     })
 }
 
-/// 根据用户id获取用户信息
+/// 根据用户id删除用户信息
 function deleteFile(app, userdbIns, dbinstance) {
-    app.apiconfig.delete('/file/:id', function (req, res) {
+    app.apiconfig.delete('/file/:id', function(req, res) {
         console.log('delete someone file invoke.');
         var id = req.params.id;
-        userdbIns.deleteUser(dbinstance, id, function(result) {
-            res.json({ 'result': result });
+        userdbIns.deleteFile(dbinstance, id, function(req) {
+            res.json({ 'result': req });
         })
-    })
+    });
 }
 
 module.exports = { creatorFile, updateFile, getFile, getFilewithID, deleteFile };

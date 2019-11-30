@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 14:45:27
+ * @LastEditTime: 2019-11-30 15:00:58
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -62,31 +62,37 @@ async function addFileWith(connection, filemodel, any) {
 }
 
 /// 更新用户信息
-function updateFileWith(connection, filemodel, any) {
-    var sql = `update File set nickname ` 
-    + `= '${filemodel["nickname"]}', email = '${filemodel["email"]}', ` 
-    + `icon = '${filemodel["icon"]}' where userid = '${filemodel["userid"]}';`;
-    console.log(sql);
-    connection.query(sql, function(err, result) {
-        if (err) {
-            any(false);
-        } else {
-            any(true);
-        }
-    });
+async function updateFileWith(connection, filemodel, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel['tables'] = 'File';
+    sqlModel['query'] = 'update';
+    sqlModel['data'] = 
+    {'fileid': filemodel["fileid"],
+     'name': filemodel["name"],
+     'description': filemodel["description"],
+     'content': filemodel["content"],
+     'folderid': filemodel["folderid"],
+     'createtime': filemodel["createtime"],
+     'changetime': filemodel["changetime"],
+     'images': filemodel["images"],
+     'currentowner': filemodel["currentowner"],
+     'creator': filemodel["creator"]
+    }
+    sqlModel['where'] = {'type': 'and', 'condition': [`fileid = '${filemodel["fileid"]}'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    any(result != null);
 }
 
 /// 删除用户信息
-function deleteFile(connection, fileid, any) {
-    var sql = `delete from File where fileid = '${fileid}';`;
-    console.log(sql);
-    connection.query(sql, function(err, result) {
-        if (err) {
-            any(false);
-        } else {
-            any(true);
-        }
-    });
+async function deleteFile(connection, fileid, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+	sqlModel["query"] = "delete";
+	sqlModel["tables"] = "File";
+    sqlModel['where'] = {'type': 'and', 'condition': [`fileid = '${fileid}'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    any(result != null);
 }
 
  module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile};

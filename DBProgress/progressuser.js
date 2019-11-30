@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-30 10:54:03
+ * @LastEditTime: 2019-11-30 10:54:25
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -34,7 +34,8 @@ function getUserWith(connection, uid, any) {
 /// 添加一个用户，传入一个user json obj
 function addUserWith(connection, usermodel, any) {
     var sql = `insert into users values ` 
-    + `(\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', \'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
+    + `(\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', ` 
+    + `\'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
     connection.query(sql, function(err, result) {
         if (err) {
             any(false);

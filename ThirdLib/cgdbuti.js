@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-11-29 10:54:54
- * @LastEditTime: 2019-11-29 10:55:11
- * @LastEditors: your name
+ * @LastEditTime: 2019-11-30 11:45:44
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/ThirdLib/cgdbuti.js
  */
@@ -31,7 +31,7 @@ var getSQLObject = function(){
 	};
 };
 
-var getSQLObject_sv = function(){
+var getSQLObjectDic = function(){
 	return {
 		"sql": "",
 		"value": []
@@ -39,7 +39,7 @@ var getSQLObject_sv = function(){
 };
 
 // 解析数据库结构体
-var _structureAnalysis = function(sqlObj) {
+var structureAnalysis = function(sqlObj) {
 	let dataKey = [], dataValue = [];
 	let optionKey = [];
 	let whereSql = "";
@@ -75,9 +75,11 @@ var _structureAnalysis = function(sqlObj) {
 	}
 	
 	// 生成SQL结构体
-	let result = getSQLObject_sv();
+	let result = getSQLObjectDic();
 	result["sql"] = sql[sqlObj["query"]];
 	result["value"] = sqlObj["query"] == "select"? [] : dataValue;
 	//console.log(result);
 	return result;
 };
+
+module.exports = {getSQLObject, structureAnalysis, getSQLObjectDic};

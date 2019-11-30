@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 11:25:08
+ * @LastEditTime: 2019-11-30 11:41:12
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -10,7 +10,7 @@
 
  /// 获取所有用户信息
 function getAllFile(connection, any) {
-    var sql = 'select * from users';
+    var sql = 'select * from File';
     connection.query(sql, function(err, result) {
         if (err) {
             any('');
@@ -21,8 +21,8 @@ function getAllFile(connection, any) {
 }
 
 /// 根据用户id获取用户信息
-function getFileWith(connection, uid, any) {
-    var sql = 'select * from users where userid = \'' + uid + '\';';
+function getFileWith(connection, fileid, any) {
+    var sql = 'select * from File where fileid = \'' + fileid + '\';';
     connection.query(sql, function(err, result) {
         if (err) {
             any('');
@@ -33,10 +33,10 @@ function getFileWith(connection, uid, any) {
 }
 
 /// 添加一个用户，传入一个user json obj
-function addFileWith(connection, usermodel, any) {
-    var sql = `insert into users values ` 
-    + `(\'${usermodel["userid"]}\', \'${usermodel["nickname"]}\', ` 
-    + `\'${usermodel["email"]}\', \'${usermodel["icon"]}\')`;
+function addFileWith(connection, filemodel, any) {
+    var sql = `insert into File values ` 
+    + `(\'${filemodel["userid"]}\', \'${filemodel["nickname"]}\', ` 
+    + `\'${filemodel["email"]}\', \'${filemodel["icon"]}\')`;
     connection.query(sql, function(err, result) {
         if (err) {
             any(false);
@@ -47,10 +47,10 @@ function addFileWith(connection, usermodel, any) {
 }
 
 /// 更新用户信息
-function updateFileWith(connection, usermodel, any) {
-    var sql = `update users set nickname ` 
-    + `= '${usermodel["nickname"]}', email = '${usermodel["email"]}', ` 
-    + `icon = '${usermodel["icon"]}' where userid = '${usermodel["userid"]}';`;
+function updateFileWith(connection, filemodel, any) {
+    var sql = `update File set nickname ` 
+    + `= '${filemodel["nickname"]}', email = '${filemodel["email"]}', ` 
+    + `icon = '${filemodel["icon"]}' where userid = '${filemodel["userid"]}';`;
     console.log(sql);
     connection.query(sql, function(err, result) {
         if (err) {
@@ -62,8 +62,8 @@ function updateFileWith(connection, usermodel, any) {
 }
 
 /// 删除用户信息
-function deleteFile(connection, uid, any) {
-    var sql = `delete users where userid = '${uid}';`;
+function deleteFile(connection, fileid, any) {
+    var sql = `delete from File where fileid = '${fileid}';`;
     console.log(sql);
     connection.query(sql, function(err, result) {
         if (err) {
@@ -74,4 +74,4 @@ function deleteFile(connection, uid, any) {
     });
 }
 
- module.exports = {getAlluser, getUserWith, addUserWith, updateUserWith, deleteUser};
+ module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile};

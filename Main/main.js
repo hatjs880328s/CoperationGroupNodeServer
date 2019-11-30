@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-30 10:46:12
+ * @LastEditTime: 2019-11-30 11:05:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -31,6 +31,7 @@ var userAPI = require('../APIProgress/apiuserprogress');
 userAPI.creatorUser(app, userdbIns, dbinstance);
 userAPI.updateUser(app, userdbIns, dbinstance);
 userAPI.getUser(app, userdbIns, dbinstance);
+userAPI.getUserwithID(app, userdbIns, dbinstance);
 
 
 

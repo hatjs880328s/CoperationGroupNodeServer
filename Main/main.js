@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-12-02 17:09:48
+ * @LastEditTime: 2019-12-02 17:18:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -48,6 +48,7 @@ fileAPI.getFile(app, filedbIns, dbinstance);
 fileAPI.updateFile(app, filedbIns, dbinstance);
 fileAPI.deleteFile(app, filedbIns, dbinstance);
 fileAPI.getOneFolderFiles(app, filedbIns, dbinstance);
+fileAPI.getOneuserNewestFiles(app, filedbIns, dbinstance);
 
 /// 文件夹的api服务监听
 var folderAPI = require('../APIProgress/apifolderprogress');

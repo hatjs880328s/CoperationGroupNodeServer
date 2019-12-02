@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-02 16:57:38
+ * @LastEditTime: 2019-12-02 17:17:45
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -63,6 +63,17 @@ function getOneFolderFiles(app, filedbIns, dbinstance) {
     });
 }
 
+/// 根据folderid获取此文件夹下所有文件
+function getOneuserNewestFiles(app, filedbIns, dbinstance) {
+    app.apiconfig.get('/files/:id', function(req, res) {
+        console.log('get someone folder all files.');
+        var id = req.params.id;
+        filedbIns.getoneuserNewestFiles(dbinstance, id, function(req) {
+            res.json(req)
+        });
+    });
+}
+
 /// 根据用户id删除用户信息
 function deleteFile(app, userdbIns, dbinstance) {
     app.apiconfig.delete('/file/:id', function(req, res) {
@@ -74,4 +85,4 @@ function deleteFile(app, userdbIns, dbinstance) {
     });
 }
 
-module.exports = { creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles };
+module.exports = { creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles, getOneuserNewestFiles };

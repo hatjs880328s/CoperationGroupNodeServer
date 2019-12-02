@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-02 16:49:31
+ * @LastEditTime: 2019-12-02 17:20:35
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -48,6 +48,21 @@ async function getFilesWithFolderid(connection, folderid, any) {
 		"*":0
 	};
     sqlModel['where'] = {'type': 'and', 'condition': [`folderid = '${folderid}'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    console.log(result);
+    any(result);
+}
+
+/// 根据用户id获取用户信息
+async function getoneuserNewestFiles(connection, userid, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "File";
+	sqlModel["data"] = {
+		"*":0
+	};
+    sqlModel['where'] = {'type': 'and', 'condition': [`folderid = ''`, `creator = '${userid}'`]}
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
     console.log(result);
     any(result);
@@ -110,4 +125,4 @@ async function deleteFile(connection, fileid, any) {
     any(result != null);
 }
 
- module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile, getFilesWithFolderid};
+ module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile, getFilesWithFolderid, getoneuserNewestFiles};

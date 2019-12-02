@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-02 09:34:05
+ * @LastEditTime: 2019-12-02 10:53:23
  * @LastEditors: Please set LastEditors
  * @Description: CMD处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -13,7 +13,7 @@ function creatorCMD(app, userdbIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.post('/CMD', urlencodedParser, function (req, res) {
         console.log('create cmd invoke.');
-        userdbIns.addFileWith(dbinstance, req.body, function(result) {
+        userdbIns.addCMDWith(dbinstance, req.body, function(result) {
             res.json({ 'result': result });
         });
     });
@@ -25,7 +25,7 @@ function updateCMD(app, fileDBIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.put('/CMD', urlencodedParser, function (req, res) {
         console.log('update cmd invoke.');
-        fileDBIns.updateFileWith(dbinstance, req.body, function(result) {
+        fileDBIns.updateCMDWith(dbinstance, req.body, function(result) {
             res.json({ 'result': result });
         })
     });
@@ -35,7 +35,7 @@ function updateCMD(app, fileDBIns, dbinstance) {
 function getCMD(app, userdbIns, dbinstance) {
     app.apiconfig.get('/CMD', function (err, res) {
         console.log('get cmd invoke.');
-        userdbIns.getAllFile(dbinstance, function (result) {
+        userdbIns.getAllCMD(dbinstance, function (result) {
             res.json(result);
         });
     })
@@ -45,8 +45,8 @@ function getCMD(app, userdbIns, dbinstance) {
 function getCMDwithID(app, userdbIns, dbinstance) {
     app.apiconfig.get('/CMD/:receiver', function (req, res) {
         console.log('get someone all cmd invoke.');
-        var id = req.params.id;
-        userdbIns.getFileWith(dbinstance, id, function(req) {
+        var id = req.params.receiver;
+        userdbIns.getCMDWith(dbinstance, id, function(req) {
             res.json(req)[0];
         });
     })
@@ -57,7 +57,7 @@ function deleteCMD(app, userdbIns, dbinstance) {
     app.apiconfig.delete('/CMD/:id', function(req, res) {
         console.log('delete someone cmd invoke.');
         var id = req.params.id;
-        userdbIns.deleteFile(dbinstance, id, function(req) {
+        userdbIns.deleteCMD(dbinstance, id, function(req) {
             res.json({ 'result': req });
         })
     });

@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-02 09:30:22
+ * @LastEditTime: 2019-12-02 10:53:30
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -34,8 +34,8 @@ async function getCMDWith(connection, fileid, any) {
 	};
     sqlModel['where'] = {'type': 'and', 'condition': [`reveiver = '${fileid}'`]}
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
-    console.log(result[0]);
-    any(result[0]);
+    console.log(result);
+    any(result);
 }
 
 /// 添加一个文件，传入一个user json obj

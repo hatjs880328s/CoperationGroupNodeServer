@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-11-30 15:00:58
+ * @LastEditTime: 2019-12-02 16:49:31
  * @LastEditors: Please set LastEditors
  * @Description: file 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfile.js
@@ -23,7 +23,7 @@ async function getAllFile(connection, any) {
     any(result);
 }
 
-/// 根据用户id获取用户信息
+/// 根据文件id获取文件信息
 async function getFileWith(connection, fileid, any) {
     var dbuti = require('../ThirdLib/cgdbuti');
     var sqlModel = dbuti.getSQLObject;
@@ -36,6 +36,21 @@ async function getFileWith(connection, fileid, any) {
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
     console.log(result[0]);
     any(result[0]);
+}
+
+/// 根据用户id获取用户信息
+async function getFilesWithFolderid(connection, folderid, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "File";
+	sqlModel["data"] = {
+		"*":0
+	};
+    sqlModel['where'] = {'type': 'and', 'condition': [`folderid = '${folderid}'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    console.log(result);
+    any(result);
 }
 
 /// 添加一个文件，传入一个user json obj
@@ -95,4 +110,4 @@ async function deleteFile(connection, fileid, any) {
     any(result != null);
 }
 
- module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile};
+ module.exports = {getAllFile, getFileWith, addFileWith, updateFileWith, deleteFile, getFilesWithFolderid};

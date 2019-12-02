@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 15:05:17
- * @LastEditTime: 2019-12-02 16:53:29
+ * @LastEditTime: 2019-12-02 17:10:45
  * @LastEditors: Please set LastEditors
  * @Description: 文件夹处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifolderprogress.js
@@ -63,4 +63,16 @@ function deleteFolder(app, FolderdbIns, dbinstance) {
     });
 }
 
-module.exports = { creatorFolder, updateFolder, getFolder, getFolderwithID, deleteFolder };
+/// 根据用户id和type获取某一类文件夹
+function getFolders(app, FolderdbIns, dbinstance) {
+    app.apiconfig.get('/folders/:id/:type', function(req, res) {
+        var uid = req.params.id;
+        var type = req.params.type;
+        console.log(`get someone folders invoke(use type: ${type} * id: ${uid}).`);
+        FolderdbIns.getFoldersWith(dbinstance, uid, type, function(req) {
+            res.json(req);
+        });
+    });
+}
+
+module.exports = { creatorFolder, updateFolder, getFolder, getFolderwithID, deleteFolder, getFolders };

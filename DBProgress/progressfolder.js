@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 15:07:51
- * @LastEditTime: 2019-11-30 15:23:34
+ * @LastEditTime: 2019-12-02 17:12:14
  * @LastEditors: Please set LastEditors
  * @Description: 文件夹的db操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfolder.js
@@ -34,6 +34,22 @@ async function getFolderWith(connection, fileid, any) {
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
     console.log(result[0]);
     any(result[0]);
+}
+
+/// 根据type uid获取此用户的某一类文件夹
+async function getFoldersWith(connection, fileid, type, any) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "Folders";
+	sqlModel["data"] = {
+		"*":0
+    };
+    // select * from Folders where type = 0 and users like '%c7f2519b-f66e-493b-af5a-fdcc990e77ad%';
+    sqlModel['where'] = {'type': 'and', 'condition': [`type = '${type}'`, `users like '%${fileid}%'`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    console.log(result);
+    any(result);
 }
 
 /// 添加一个文件，传入一个user json obj
@@ -89,4 +105,4 @@ async function deleteFolder(connection, fileid, any) {
     any(result != null);
 }
 
- module.exports = {getAllFolder, getFolderWith, addFolderWith, updateFolderWith, deleteFolder};
+ module.exports = {getAllFolder, getFolderWith, addFolderWith, updateFolderWith, deleteFolder, getFoldersWith};

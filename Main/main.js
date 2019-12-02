@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-11-30 15:16:29
+ * @LastEditTime: 2019-12-02 09:36:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -28,6 +28,8 @@ const userdbIns = require('../DBProgress/progressuser');
 const filedbIns = require('../DBProgress/progressfile');
 // folder db progress ins
 const folderdbIns = require('../DBProgress/progressfolder');
+// CMD db progress ins
+const cmddbIns = require('../DBProgress/progresscmd');
 
 
 /// 用户的api服务监听
@@ -53,6 +55,14 @@ folderAPI.getFolderwithID(app, folderdbIns, dbinstance);
 folderAPI.getFolder(app, folderdbIns, dbinstance);
 folderAPI.updateFolder(app, folderdbIns, dbinstance);
 folderAPI.deleteFolder(app, folderdbIns, dbinstance);
+
+/// cmd的api服务监听
+var cmdAPI = require('../APIProgress/apicmdprogress');
+cmdAPI.creatorCMD(app, cmddbIns, dbinstance);
+cmdAPI.getCMDwithID(app, cmddbIns, dbinstance);
+cmdAPI.getCMD(app, cmddbIns, dbinstance);
+cmdAPI.updateCMD(app, cmddbIns, dbinstance);
+cmdAPI.deleteCMD(app, cmddbIns, dbinstance);
 
 
 /// 开启监听

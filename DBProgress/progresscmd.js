@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-02 10:53:30
+ * @LastEditTime: 2019-12-03 19:22:26
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -87,4 +87,22 @@ async function deleteCMD(connection, fileid, any) {
     any(result != null);
 }
 
- module.exports = {getAllCMD, getCMDWith, addCMDWith, updateCMDWith, deleteCMD};
+/// 指令操作 - 同意还是拒绝邀请
+async function progressCMD(connection, oldCMDid, filemodel, callBack) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    //1.delete sql
+    var deleteSql = `delete from CMD where cmdid = '${oldCMDid}'`;
+    console.log('~~~~~~~~~~~~~~~~~~~~~~');
+    console.log(deleteSql);
+    console.log(filemodel);
+    console.log('~~~~~~~~~~~~~~~~~~~~~~');
+    //2.添加一个新指令
+    var newSql = `insert into CMD values ('${filemodel["cmdid"]}', '${filemodel["sender"]}', '${filemodel["reveiver"]}', ${filemodel["cmdtype"]}, '${filemodel["time"]}', '${filemodel["groupid"]}')`;
+    // 3.执行transcation
+    dbuti.execTrans(connection, [deleteSql, newSql], function(err, info) {
+        callBack(err, info);
+    })
+}
+
+
+ module.exports = {getAllCMD, getCMDWith, addCMDWith, updateCMDWith, deleteCMD, progressCMD};

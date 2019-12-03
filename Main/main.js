@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-12-03 15:54:42
+ * @LastEditTime: 2019-12-03 19:18:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -67,6 +67,7 @@ cmdAPI.getCMDwithID(app, cmddbIns, dbinstance);
 cmdAPI.getCMD(app, cmddbIns, dbinstance);
 cmdAPI.updateCMD(app, cmddbIns, dbinstance);
 cmdAPI.deleteCMD(app, cmddbIns, dbinstance);
+cmdAPI.progressCMD(app, cmddbIns, dbinstance);
 
 
 /// 开启监听

@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-02 10:53:23
+ * @LastEditTime: 2019-12-03 19:24:16
  * @LastEditors: Please set LastEditors
  * @Description: CMD处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -63,4 +63,21 @@ function deleteCMD(app, userdbIns, dbinstance) {
     });
 }
 
-module.exports = { creatorCMD, updateCMD, getCMD, getCMDwithID, deleteCMD };
+/// 指令操作
+function progressCMD(app, cmddbIns, dbinstance) {
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.urlencoded({ extended: false })
+    app.apiconfig.put('/CMD/:id', urlencodedParser, function(req, res) {
+        var oldCMDid = req.params.id;
+        var body  = req.body;
+        cmddbIns.progressCMD(dbinstance, oldCMDid, body, function(err, info) {
+            if (null == err) {
+                res.json({'result': true});
+            } else {
+                res.json({'result': false});
+            }
+        });
+    })
+}
+
+module.exports = { creatorCMD, updateCMD, getCMD, getCMDwithID, deleteCMD, progressCMD };

@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-11-30 11:31:45
+ * @LastEditTime: 2019-12-03 16:21:09
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -29,6 +29,31 @@ function getUserWith(connection, uid, any) {
             any(result);
         }
     });
+}
+
+/// 根据userid获取所有的user信息  userids:   aaaa,bbb,ccc
+/// // select * from users where userid in ('6c0f8dce9b062a9123e5b920f0154a24', 'caff566ebcf6ba6feb6e794bce436c63');
+async function getUsersWith(connection, userids) {
+    var dbuti = require('../ThirdLib/cgdbuti');
+    var sqlModel = dbuti.getSQLObject;
+    sqlModel["query"] = "select";
+	sqlModel["tables"] = "users";
+	sqlModel["data"] = {
+		"*":0
+	};
+    var useridList = userids.split(',');
+    var realUserids = '';
+    for (i = 0 ; i < useridList.length ; i++) {
+        if (useridList[i] == '') { continue; }
+        if (i == useridList.length - 1) {
+            realUserids += `'${useridList[i]}'`
+        } else {
+            realUserids += `'${useridList[i]}',`
+        }
+    }
+    sqlModel['where'] = {'type': 'and', 'condition': [`userid in (${realUserids})`]}
+    var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
+    return result;
 }
 
 /// 添加一个用户，传入一个user json obj
@@ -73,4 +98,4 @@ function deleteUser(connection, uid, any) {
     });
 }
 
- module.exports = {getAlluser, getUserWith, addUserWith, updateUserWith, deleteUser};
+ module.exports = {getAlluser, getUserWith, addUserWith, updateUserWith, deleteUser, getUsersWith};

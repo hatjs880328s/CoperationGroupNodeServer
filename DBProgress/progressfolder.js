@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 15:07:51
- * @LastEditTime: 2019-12-02 17:12:14
+ * @LastEditTime: 2019-12-03 15:39:34
  * @LastEditors: Please set LastEditors
  * @Description: 文件夹的db操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfolder.js
@@ -34,6 +34,7 @@ async function getFolderWith(connection, fileid, any) {
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
     console.log(result[0]);
     any(result[0]);
+    return result[0];
 }
 
 /// 根据type uid获取此用户的某一类文件夹

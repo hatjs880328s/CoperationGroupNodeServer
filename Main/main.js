@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-12-02 17:18:02
+ * @LastEditTime: 2019-12-03 15:54:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -58,6 +58,7 @@ folderAPI.getFolder(app, folderdbIns, dbinstance);
 folderAPI.updateFolder(app, folderdbIns, dbinstance);
 folderAPI.deleteFolder(app, folderdbIns, dbinstance);
 folderAPI.getFolders(app, folderdbIns, dbinstance);
+folderAPI.getCoperationFolders(app, dbinstance);
 
 /// cmd的api服务监听
 var cmdAPI = require('../APIProgress/apicmdprogress');

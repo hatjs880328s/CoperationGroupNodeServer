@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-03 19:22:26
+ * @LastEditTime: 2019-12-03 19:53:33
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -97,7 +97,10 @@ async function progressCMD(connection, oldCMDid, filemodel, callBack) {
     console.log(filemodel);
     console.log('~~~~~~~~~~~~~~~~~~~~~~');
     //2.添加一个新指令
-    var newSql = `insert into CMD values ('${filemodel["cmdid"]}', '${filemodel["sender"]}', '${filemodel["reveiver"]}', ${filemodel["cmdtype"]}, '${filemodel["time"]}', '${filemodel["groupid"]}')`;
+    var newSql = `insert into CMD values ('${filemodel["cmdid"]}', '${filemodel["sender"]}', ` +
+     `'${filemodel["reveiver"]}', ${filemodel["cmdtype"]}, '${filemodel["time"]}', '${filemodel["groupid"]}')`;
+    //2.如果是同意，将发送者id加入到folder的users中
+    var updateSql = ``;
     // 3.执行transcation
     dbuti.execTrans(connection, [deleteSql, newSql], function(err, info) {
         callBack(err, info);

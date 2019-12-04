@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-02 17:17:45
+ * @LastEditTime: 2019-12-04 14:52:23
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -85,4 +85,39 @@ function deleteFile(app, userdbIns, dbinstance) {
     });
 }
 
-module.exports = { creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles, getOneuserNewestFiles };
+/// 想要编辑一个协同文件 [需要查看是否别占用;占用返回false,否则返回ture，并写入一个key;如果是自己占用也返回true]
+function editFile(app, redisDb) {
+    app.apiconfig.get('/editfile/:id/:username', function(req, res) {
+        console.log('should edit someone file invoke.');
+        var fileid = req.params.id;
+        var userid = req.params.username;
+        var dbprogress = require('../RedisProgress/radisprogress')
+        dbprogress.getKey(redisDb, fileid, function(result, value) {
+            console.log('result value is' + value);
+            if (result) {
+                if (value == userid) {
+                    res.json({"result": true, "whoEdit": value == null ? '' : value});
+                } else {
+                    res.json({"result": false, "whoEdit": value == null ? '' : value});
+                }
+            } else {
+                dbprogress.saveKey(redisDb, fileid, userid);
+                res.json({"result": true, "whoEdit": ''});
+            }
+        })
+    });
+}
+
+/// 结束编辑协同文件
+function editFileEnd(app, redisDb) {
+    app.apiconfig.delete('/editfile/:id', function(req, res) {
+        console.log('end edit someone file invoke.');
+        var id = req.params.id;
+        var dbprogress = require('../RedisProgress/radisprogress')
+        dbprogress.deleteKey(redisDb, id, function(result) {
+            res.json({'result': result});
+        })
+    })
+}
+
+module.exports = { editFileEnd, creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles, getOneuserNewestFiles, editFile };

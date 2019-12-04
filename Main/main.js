@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-12-03 19:18:27
+ * @LastEditTime: 2019-12-04 14:08:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -16,11 +16,17 @@ const mysql = require('../UTI/ConnectDB');
 /// api instance
 const app = require('../UTI/ConnectAPI');
 
+/// redis instance
+const redisConfig = require('../UTI/ConnectRedis');
+
 /// db config 
 var dbinstance = mysql.mysqlconnect();
 
 /// api config
 app.config();
+
+/// redis config
+var redisDb = redisConfig.redisConfig();
 
 // users db progress ins
 const userdbIns = require('../DBProgress/progressuser');
@@ -49,6 +55,8 @@ fileAPI.updateFile(app, filedbIns, dbinstance);
 fileAPI.deleteFile(app, filedbIns, dbinstance);
 fileAPI.getOneFolderFiles(app, filedbIns, dbinstance);
 fileAPI.getOneuserNewestFiles(app, filedbIns, dbinstance);
+fileAPI.editFile(app, redisDb);
+fileAPI.editFileEnd(app, redisDb);
 
 /// 文件夹的api服务监听
 var folderAPI = require('../APIProgress/apifolderprogress');

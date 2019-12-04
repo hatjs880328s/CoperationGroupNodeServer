@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 15:07:51
- * @LastEditTime: 2019-12-03 15:39:34
+ * @LastEditTime: 2019-12-04 08:46:23
  * @LastEditors: Please set LastEditors
  * @Description: 文件夹的db操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressfolder.js
@@ -93,6 +93,7 @@ async function updateFolderWith(connection, filemodel, any) {
     sqlModel['where'] = {'type': 'and', 'condition': [`folderid = '${filemodel["folderid"]}'`]}
     var result = await dbuti.ControlAPI_obj_async(sqlModel, connection);
     any(result != null);
+    return result != null;
 }
 
 /// 删除用户信息

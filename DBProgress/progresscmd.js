@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-03 19:54:53
+ * @LastEditTime: 2019-12-04 08:50:54
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -90,13 +90,32 @@ async function deleteCMD(connection, fileid, any) {
 /// 指令操作 - 同意还是拒绝邀请
 async function progressCMD(connection, oldCMDid, filemodel, callBack) {
     var dbuti = require('../ThirdLib/cgdbuti');
+    var middleParam = true;
     //1.delete sql
     var deleteSql = `delete from CMD where cmdid = '${oldCMDid}'`;
     //2.添加一个新指令
     var newSql = `insert into CMD values ('${filemodel["cmdid"]}', '${filemodel["sender"]}', ` +
      `'${filemodel["reveiver"]}', ${filemodel["cmdtype"]}, '${filemodel["time"]}', '${filemodel["groupid"]}')`;
     //2.如果是同意，将发送者id加入到folder的users中
-    var updateSql = `update Folders set users = '' where folderid = ''`;
+    if (filemodel["cmdtype"] == '1') {
+        //同意
+        // a.获取目标folder信息
+        var folderdb = require('./progressfolder');
+        var folderInfo = await folderdb.getFolderWith(connection, filemodel['groupid'], function(req) {});
+        var oldUsers = folderInfo['users'];
+        oldUsers += `,${filemodel["sender"]}`;
+        folderInfo['users'] = oldUsers;
+        // b.更新
+        var updateResult = await folderdb.updateFolderWith(connection, folderInfo, function(result) {});
+        middleParam = updateResult;
+    } else {
+        //不同意
+    }
+    if (!middleParam) {
+        callBack('progress folder users fail...', info); 
+        return;
+    }
+    //var updateSql = `update Folders set users = '' where folderid = '${filemodel["groupid"]}'`;
     // 3.执行transcation
     dbuti.execTrans(connection, [deleteSql, newSql], function(err, info) {
         callBack(err, info);

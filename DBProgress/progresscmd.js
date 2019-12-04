@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-04 08:50:54
+ * @LastEditTime: 2019-12-04 09:52:21
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -87,6 +87,23 @@ async function deleteCMD(connection, fileid, any) {
     any(result != null);
 }
 
+/// 获取指令 - 集成了用户与群组信息
+function getJoinCMDInfo(connection, cmdid, any) {
+    var sql = 'select users.nickname , CMD.*, Folders.name from CMD LEFT JOIN users ' + 
+    'on users.userid = CMD.sender ' +
+    'LEFT JOIN Folders ' +
+    'ON Folders.folderid = CMD.groupid ' +
+    `where CMD.reveiver = '${cmdid}';`;
+    console.log(sql);
+    connection.query(sql, function(err, result) {
+        if (err) {
+            any([]);
+        } else {
+            any(result);
+        }
+    });
+}
+
 /// 指令操作 - 同意还是拒绝邀请
 async function progressCMD(connection, oldCMDid, filemodel, callBack) {
     var dbuti = require('../ThirdLib/cgdbuti');
@@ -123,4 +140,4 @@ async function progressCMD(connection, oldCMDid, filemodel, callBack) {
 }
 
 
- module.exports = {getAllCMD, getCMDWith, addCMDWith, updateCMDWith, deleteCMD, progressCMD};
+ module.exports = {getAllCMD, getCMDWith, addCMDWith, updateCMDWith, deleteCMD, progressCMD, getJoinCMDInfo};

@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-03 19:24:16
+ * @LastEditTime: 2019-12-04 09:49:01
  * @LastEditors: Please set LastEditors
  * @Description: CMD处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -46,8 +46,8 @@ function getCMDwithID(app, userdbIns, dbinstance) {
     app.apiconfig.get('/CMD/:receiver', function (req, res) {
         console.log('get someone all cmd invoke.');
         var id = req.params.receiver;
-        userdbIns.getCMDWith(dbinstance, id, function(req) {
-            res.json(req)[0];
+        userdbIns.getJoinCMDInfo(dbinstance, id, function(req) {
+            res.json(req);
         });
     })
 }

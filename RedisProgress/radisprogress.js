@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-04 13:35:12
- * @LastEditTime: 2019-12-04 14:12:52
+ * @LastEditTime: 2019-12-05 09:27:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/RedisProgress/radisprogress.js
@@ -27,6 +27,7 @@ function getKey(db, key, result) {
             console.log(`redis - key: ${key} ; value: ${value}`);
             if (value == null) {
                 result(false, null);
+                return;
             }
             result(true, value);
         }

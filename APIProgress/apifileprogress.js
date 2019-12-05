@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-04 14:52:23
+ * @LastEditTime: 2019-12-05 08:55:45
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -93,7 +93,8 @@ function editFile(app, redisDb) {
         var userid = req.params.username;
         var dbprogress = require('../RedisProgress/radisprogress')
         dbprogress.getKey(redisDb, fileid, function(result, value) {
-            console.log('result value is' + value);
+
+            console.log('result value is ' + value);
             if (result) {
                 if (value == userid) {
                     res.json({"result": true, "whoEdit": value == null ? '' : value});

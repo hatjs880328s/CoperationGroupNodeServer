@@ -1,8 +1,8 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2019-12-04 14:08:49
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-31 15:48:04
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
  */
@@ -36,6 +36,8 @@ const filedbIns = require('../DBProgress/progressfile');
 const folderdbIns = require('../DBProgress/progressfolder');
 // CMD db progress ins
 const cmddbIns = require('../DBProgress/progresscmd');
+// TSSC db progress ins
+const tsscdbins = require('../DBProgress/progressTSSC');
 
 
 /// 用户的api服务监听
@@ -76,6 +78,10 @@ cmdAPI.getCMD(app, cmddbIns, dbinstance);
 cmdAPI.updateCMD(app, cmddbIns, dbinstance);
 cmdAPI.deleteCMD(app, cmddbIns, dbinstance);
 cmdAPI.progressCMD(app, cmddbIns, dbinstance);
+
+/// TSSC的api服务监听
+var tsscAPI = require('../APIProgress/apiTSSCprogress');
+tsscAPI.syncTSSCInfos(app, tsscdbins, dbinstance);
 
 
 /// 开启监听

@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime : 2019-12-31 15:48:04
+ * @LastEditTime : 2020-01-03 09:32:56
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -82,6 +82,7 @@ cmdAPI.progressCMD(app, cmddbIns, dbinstance);
 /// TSSC的api服务监听
 var tsscAPI = require('../APIProgress/apiTSSCprogress');
 tsscAPI.syncTSSCInfos(app, tsscdbins, dbinstance);
+tsscAPI.syncTSSCAuthorsInfo(app, tsscdbins, dbinstance);
 
 
 /// 开启监听

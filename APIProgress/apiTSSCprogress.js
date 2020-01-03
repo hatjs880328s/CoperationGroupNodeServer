@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-30 16:29:32
- * @LastEditTime : 2020-01-03 09:32:38
+ * @LastEditTime : 2020-01-03 17:15:42
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apiTSSCprogress.js
@@ -33,5 +33,29 @@ function syncTSSCAuthorsInfo(app, TSSCDBIns, dbinstance) {
     });
 }
 
+/// sc async
+function syncSCInfos(app, TSSCDBIns, dbinstance) {
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.json({ extended: false })
+    app.apiconfig.post('/sc/sync', urlencodedParser, function (req, res) {
+        console.log('sync SC detail infos.');
+        TSSCDBIns.addSCWith(dbinstance, req.body, function(result) {
+            res.json({ 'result': result });
+        });
+    });
+}
 
-module.exports = { syncTSSCInfos, syncTSSCAuthorsInfo };
+/// tssc author
+function syncSCAuthorsInfo(app, TSSCDBIns, dbinstance) {
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.json({ extended: false })
+    app.apiconfig.post('/scauthor/sync', urlencodedParser, function (req, res) {
+        console.log('sync SC author detail infos.');
+        TSSCDBIns.addSCAuthorWith(dbinstance, req.body, function(result) {
+            res.json({ 'result': result });
+        });
+    });
+}
+
+
+module.exports = { syncTSSCInfos, syncTSSCAuthorsInfo, syncSCInfos, syncSCAuthorsInfo };

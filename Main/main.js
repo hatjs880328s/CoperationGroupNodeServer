@@ -1,8 +1,8 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime : 2020-01-03 17:16:24
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-06-04 16:43:45
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
  */
@@ -20,7 +20,10 @@ const app = require('../UTI/ConnectAPI');
 const redisConfig = require('../UTI/ConnectRedis');
 
 /// db config 
-var dbinstance = mysql.mysqlconnect();
+/// 首先将这个连接封装成一个module，然后向外导出连接的方法‘handleDisconnection’和‘connection’；
+/// 在你需要的地方全局调用handleDisconnection方法，具体不多说了，怕暴露智商，这里要特别注意的是，在使用连接‘connection’的时候，
+/// 这个‘connection’不能作为全局变量，应该在每一次执行数据请求的时候去获取，不然不能获取到最新的‘connection’。
+var dbinstance = mysql.handleDisconnection();
 
 /// api config
 app.config();
@@ -42,49 +45,49 @@ const tsscdbins = require('../DBProgress/progressTSSC');
 
 /// 用户的api服务监听
 var userAPI = require('../APIProgress/apiuserprogress');
-userAPI.creatorUser(app, userdbIns, dbinstance);
-userAPI.updateUser(app, userdbIns, dbinstance);
-userAPI.getUser(app, userdbIns, dbinstance);
-userAPI.getUserwithID(app, userdbIns, dbinstance);
-userAPI.deleteUser(app, userdbIns, dbinstance);
+userAPI.creatorUser(app, userdbIns, mysql.connection);
+userAPI.updateUser(app, userdbIns, mysql.connection);
+userAPI.getUser(app, userdbIns, mysql.connection);
+userAPI.getUserwithID(app, userdbIns, mysql.connection);
+userAPI.deleteUser(app, userdbIns, mysql.connection);
 
 /// 文件的api服务监听
 var fileAPI = require('../APIProgress/apifileprogress');
-fileAPI.creatorFile(app, filedbIns, dbinstance);
-fileAPI.getFilewithID(app, filedbIns, dbinstance);
-fileAPI.getFile(app, filedbIns, dbinstance);
-fileAPI.updateFile(app, filedbIns, dbinstance);
-fileAPI.deleteFile(app, filedbIns, dbinstance);
-fileAPI.getOneFolderFiles(app, filedbIns, dbinstance);
-fileAPI.getOneuserNewestFiles(app, filedbIns, dbinstance);
+fileAPI.creatorFile(app, filedbIns, mysql.connection);
+fileAPI.getFilewithID(app, filedbIns, mysql.connection);
+fileAPI.getFile(app, filedbIns, mysql.connection);
+fileAPI.updateFile(app, filedbIns, mysql.connection);
+fileAPI.deleteFile(app, filedbIns, mysql.connection);
+fileAPI.getOneFolderFiles(app, filedbIns, mysql.connection);
+fileAPI.getOneuserNewestFiles(app, filedbIns, mysql.connection);
 fileAPI.editFile(app, redisDb);
 fileAPI.editFileEnd(app, redisDb);
 
 /// 文件夹的api服务监听
 var folderAPI = require('../APIProgress/apifolderprogress');
-folderAPI.creatorFolder(app, folderdbIns, dbinstance);
-folderAPI.getFolderwithID(app, folderdbIns, dbinstance);
-folderAPI.getFolder(app, folderdbIns, dbinstance);
-folderAPI.updateFolder(app, folderdbIns, dbinstance);
-folderAPI.deleteFolder(app, folderdbIns, dbinstance);
-folderAPI.getFolders(app, folderdbIns, dbinstance);
-folderAPI.getCoperationFolders(app, dbinstance);
+folderAPI.creatorFolder(app, folderdbIns, mysql.connection);
+folderAPI.getFolderwithID(app, folderdbIns, mysql.connection);
+folderAPI.getFolder(app, folderdbIns, mysql.connection);
+folderAPI.updateFolder(app, folderdbIns, mysql.connection);
+folderAPI.deleteFolder(app, folderdbIns, mysql.connection);
+folderAPI.getFolders(app, folderdbIns, mysql.connection);
+folderAPI.getCoperationFolders(app, mysql.connection);
 
 /// cmd的api服务监听
 var cmdAPI = require('../APIProgress/apicmdprogress');
-cmdAPI.creatorCMD(app, cmddbIns, dbinstance);
-cmdAPI.getCMDwithID(app, cmddbIns, dbinstance);
-cmdAPI.getCMD(app, cmddbIns, dbinstance);
-cmdAPI.updateCMD(app, cmddbIns, dbinstance);
-cmdAPI.deleteCMD(app, cmddbIns, dbinstance);
-cmdAPI.progressCMD(app, cmddbIns, dbinstance);
+cmdAPI.creatorCMD(app, cmddbIns, mysql.connection);
+cmdAPI.getCMDwithID(app, cmddbIns, mysql.connection);
+cmdAPI.getCMD(app, cmddbIns, mysql.connection);
+cmdAPI.updateCMD(app, cmddbIns, mysql.connection);
+cmdAPI.deleteCMD(app, cmddbIns, mysql.connection);
+cmdAPI.progressCMD(app, cmddbIns, mysql.connection);
 
 /// TSSC的api服务监听
 var tsscAPI = require('../APIProgress/apiTSSCprogress');
-tsscAPI.syncTSSCInfos(app, tsscdbins, dbinstance);
-tsscAPI.syncTSSCAuthorsInfo(app, tsscdbins, dbinstance);
-tsscAPI.syncSCInfos(app, tsscdbins, dbinstance);
-tsscAPI.syncSCAuthorsInfo(app, tsscdbins, dbinstance);
+tsscAPI.syncTSSCInfos(app, tsscdbins, mysql.connection);
+tsscAPI.syncTSSCAuthorsInfo(app, tsscdbins, mysql.connection);
+tsscAPI.syncSCInfos(app, tsscdbins, mysql.connection);
+tsscAPI.syncSCAuthorsInfo(app, tsscdbins, mysql.connection);
 
 
 /// 开启监听

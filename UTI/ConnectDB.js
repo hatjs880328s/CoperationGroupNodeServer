@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2020-06-04 16:42:45
+ * @LastEditTime: 2020-06-05 15:41:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -46,14 +46,14 @@
         var connection = mysql.createConnection(mysql_config);
          connection.connect(function(err) {
              if(err) {
-                 setTimeout('handleDisconnection()', 2000);
+                 setTimeout(handleDisconnection, 2000);
              }
          });
      
          connection.on('error', function(err) {
-             logger.error('db error', err);
+             console.log(`db error is: ${err}`);
              if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-                 logger.error('db error执行重连:'+err.message);
+                 console.log(`db error执行重连: ${err}`);
                  handleDisconnection();
              } else {
                  throw err;

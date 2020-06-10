@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 11:24:12
- * @LastEditTime: 2019-12-04 10:04:42
+ * @LastEditTime: 2020-06-09 10:02:45
  * @LastEditors: Please set LastEditors
  * @Description: CMD 的操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progresscmd.js
@@ -95,6 +95,7 @@ function getJoinCMDInfo(connection, cmdid, any) {
     'ON Folders.folderid = CMD.groupid ' +
     `where CMD.reveiver = '${cmdid}';`;
     connection.query(sql, function(err, result) {
+        connection.destroy();
         if (err) {
             any([]);
         } else {

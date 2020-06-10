@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-29 10:54:54
- * @LastEditTime: 2019-12-03 19:37:56
+ * @LastEditTime: 2020-06-09 10:14:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNodeServer/ThirdLib/cgdbuti.js
@@ -114,13 +114,16 @@ function dataBaseControl(connection, sql, args, callback) {
 			if (error) {
 				console.error(error);
 				callback(null);
+				connection.destroy();
 				return;
 			}
 			callback(results);
+			connection.destroy();
 		});
 	}
 	else {
 		connection.query(sql, args, function (error, results, fields) {
+			connection.destroy();
 			if (error) {
 				console.error(error);
 				callback(null);
@@ -147,9 +150,11 @@ function execTrans(connection, sqlparamsEntities, callback) {
 					if (tErr) {
 						connection.rollback(function () {
 							console.log("事务失败，" + sql_param + "，ERROR：" + tErr);
+							connection.destroy();
 							throw tErr;
 						});
 					} else {
+						connection.destroy();
 						return cb(null, 'ok');
 					}
 				})
@@ -162,7 +167,7 @@ function execTrans(connection, sqlparamsEntities, callback) {
 			if (err) {
 				connection.rollback(function (err) {
 					console.log("transaction error: " + err);
-					connection.release();
+					connection.destroy();
 					callback(err, null);
 				});
 			} else {
@@ -172,10 +177,11 @@ function execTrans(connection, sqlparamsEntities, callback) {
 						console.log("执行事务失败，" + err);
 						connection.rollback(function (err) {
 							console.log("transaction error: " + err);
-							connection.release();
+							connection.destroy();
 							callback(err, null);
 						});
 					} else {
+						connection.destroy();
 						callback(null, info);
 					}
 				})

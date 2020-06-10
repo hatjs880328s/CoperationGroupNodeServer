@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-29 10:01:42
- * @LastEditTime: 2019-12-03 16:21:09
+ * @LastEditTime: 2020-06-09 09:44:46
  * @LastEditors: Please set LastEditors
  * @Description: 处理user表所有操作
  * @FilePath: /CoperationGroupNodeServer/DBProgress/progressuser.js
@@ -16,6 +16,7 @@ function getAlluser(connection, any) {
         } else {
             any(result);
         }
+        connection.destroy();
     });
 }
 
@@ -28,6 +29,7 @@ function getUserWith(connection, uid, any) {
         } else {
             any(result);
         }
+        connection.destroy();
     });
 }
 
@@ -67,6 +69,7 @@ function addUserWith(connection, usermodel, any) {
         } else {
             any(true);
         }
+        connection.destroy();
     });
 }
 
@@ -82,6 +85,7 @@ function updateUserWith(connection, usermodel, any) {
         } else {
             any(true);
         }
+        connection.destroy();
     });
 }
 
@@ -95,6 +99,7 @@ function deleteUser(connection, uid, any) {
         } else {
             any(true);
         }
+        connection.destroy();
     });
 }
 

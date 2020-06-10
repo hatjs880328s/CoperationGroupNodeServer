@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 15:05:17
- * @LastEditTime: 2019-12-03 16:14:31
+ * @LastEditTime: 2020-06-10 20:13:09
  * @LastEditors: Please set LastEditors
  * @Description: 文件夹处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifolderprogress.js
@@ -13,9 +13,9 @@ function creatorFolder(app, FolderdbIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.post('/folder', urlencodedParser, function (req, res) {
         console.log('create folder invoke.');
-        FolderdbIns.addFolderWith(dbinstance, req.body, function (result) {
+        FolderdbIns.addFolderWith(dbinstance(), req.body, function (result) {
             res.json({ 'result': result });
-        });
+        });   
     });
 }
 
@@ -46,7 +46,7 @@ function getFolderwithID(app, FolderdbIns, dbinstance) {
     app.apiconfig.get('/folder/:id', function (req, res) {
         console.log('get someone folder invoke.');
         var id = req.params.id;
-        FolderdbIns.getFolderWith(dbinstance, id, function (req) {
+        FolderdbIns.getFolderWith(dbinstance(), id, function (req) {
             res.json(req)[0];
         });
     })
@@ -57,7 +57,7 @@ function deleteFolder(app, FolderdbIns, dbinstance) {
     app.apiconfig.delete('/folder/:id', function (req, res) {
         console.log('delete someone folder invoke.');
         var id = req.params.id;
-        FolderdbIns.deleteFolder(dbinstance, id, function (req) {
+        FolderdbIns.deleteFolder(dbinstance(), id, function (req) {
             res.json({ 'result': req });
         })
     });
@@ -69,7 +69,7 @@ function getFolders(app, FolderdbIns, dbinstance) {
         var uid = req.params.id;
         var type = req.params.type;
         console.log(`get someone folders invoke(use type: ${type} * id: ${uid}).`);
-        FolderdbIns.getFoldersWith(dbinstance, uid, type, function (req) {
+        FolderdbIns.getFoldersWith(dbinstance(), uid, type, function (req) {
             res.json(req);
         });
     });
@@ -91,13 +91,13 @@ function getCoperationFolders(app, dbinstance) {
         console.log('get coperation group info[incloud users & files]');
 
         // 1.获取folderdic
-        await folderdbIns.getFolderWith(dbinstance, coperid, async function (req) {
+        await folderdbIns.getFolderWith(dbinstance(), coperid, async function (req) {
             console.log(req['users']);
             console.log(req['folderid']);
             // 2.获取所有user信息 
-            var userList = await userdbIns.getUsersWith(dbinstance, req['users']);
+            var userList = await userdbIns.getUsersWith(dbinstance(), req['users']);
             // 3.获取文件信息
-            var fileList = await filedbIns.getFilesWithFolderid(dbinstance, req['folderid'], function (req) { })
+            var fileList = await filedbIns.getFilesWithFolderid(dbinstance(), req['folderid'], function (req) { })
             for (i = 0 ; i < fileList.length ; i++) {
                 fileList[i]['content'] = ''
             }

@@ -1,7 +1,7 @@
 /*
  * @Author: NOAH SHAN
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-04 09:49:01
+ * @LastEditTime: 2020-06-10 20:13:43
  * @LastEditors: Please set LastEditors
  * @Description: CMD处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -13,7 +13,7 @@ function creatorCMD(app, userdbIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.post('/CMD', urlencodedParser, function (req, res) {
         console.log('create cmd invoke.');
-        userdbIns.addCMDWith(dbinstance, req.body, function(result) {
+        userdbIns.addCMDWith(dbinstance(), req.body, function(result) {
             res.json({ 'result': result });
         });
     });
@@ -25,7 +25,7 @@ function updateCMD(app, fileDBIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.put('/CMD', urlencodedParser, function (req, res) {
         console.log('update cmd invoke.');
-        fileDBIns.updateCMDWith(dbinstance, req.body, function(result) {
+        fileDBIns.updateCMDWith(dbinstance(), req.body, function(result) {
             res.json({ 'result': result });
         })
     });
@@ -35,7 +35,7 @@ function updateCMD(app, fileDBIns, dbinstance) {
 function getCMD(app, userdbIns, dbinstance) {
     app.apiconfig.get('/CMD', function (err, res) {
         console.log('get cmd invoke.');
-        userdbIns.getAllCMD(dbinstance, function (result) {
+        userdbIns.getAllCMD(dbinstance(), function (result) {
             res.json(result);
         });
     })
@@ -46,7 +46,7 @@ function getCMDwithID(app, userdbIns, dbinstance) {
     app.apiconfig.get('/CMD/:receiver', function (req, res) {
         console.log('get someone all cmd invoke.');
         var id = req.params.receiver;
-        userdbIns.getJoinCMDInfo(dbinstance, id, function(req) {
+        userdbIns.getJoinCMDInfo(dbinstance(), id, function(req) {
             res.json(req);
         });
     })
@@ -57,7 +57,7 @@ function deleteCMD(app, userdbIns, dbinstance) {
     app.apiconfig.delete('/CMD/:id', function(req, res) {
         console.log('delete someone cmd invoke.');
         var id = req.params.id;
-        userdbIns.deleteCMD(dbinstance, id, function(req) {
+        userdbIns.deleteCMD(dbinstance(), id, function(req) {
             res.json({ 'result': req });
         })
     });
@@ -70,7 +70,7 @@ function progressCMD(app, cmddbIns, dbinstance) {
     app.apiconfig.put('/CMD/:id', urlencodedParser, function(req, res) {
         var oldCMDid = req.params.id;
         var body  = req.body;
-        cmddbIns.progressCMD(dbinstance, oldCMDid, body, function(err, info) {
+        cmddbIns.progressCMD(dbinstance(), oldCMDid, body, function(err, info) {
             if (null == err) {
                 res.json({'result': true});
             } else {

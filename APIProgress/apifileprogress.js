@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2019-12-05 08:55:45
+ * @LastEditTime: 2020-06-10 20:12:16
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -13,7 +13,7 @@ function creatorFile(app, userdbIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.post('/file', urlencodedParser, function (req, res) {
         console.log('create file invoke.');
-        userdbIns.addFileWith(dbinstance, req.body, function(result) {
+        userdbIns.addFileWith(dbinstance(), req.body, function(result) {
             res.json({ 'result': result });
         });
     });
@@ -25,7 +25,7 @@ function updateFile(app, fileDBIns, dbinstance) {
     var urlencodedParser = bodyParser.urlencoded({ extended: false })
     app.apiconfig.put('/file', urlencodedParser, function (req, res) {
         console.log('update file invoke.');
-        fileDBIns.updateFileWith(dbinstance, req.body, function(result) {
+        fileDBIns.updateFileWith(dbinstance(), req.body, function(result) {
             res.json({ 'result': result });
         })
     });
@@ -35,7 +35,7 @@ function updateFile(app, fileDBIns, dbinstance) {
 function getFile(app, userdbIns, dbinstance) {
     app.apiconfig.get('/file', function (err, res) {
         console.log('get file invoke.');
-        userdbIns.getAllFile(dbinstance, function (result) {
+        userdbIns.getAllFile(dbinstance(), function (result) {
             res.json(result);
         });
     })
@@ -46,7 +46,7 @@ function getFilewithID(app, userdbIns, dbinstance) {
     app.apiconfig.get('/file/:id', function (req, res) {
         console.log('get someone file invoke.');
         var id = req.params.id;
-        userdbIns.getFileWith(dbinstance, id, function(req) {
+        userdbIns.getFileWith(dbinstance(), id, function(req) {
             res.json(req)[0];
         });
     })
@@ -57,7 +57,7 @@ function getOneFolderFiles(app, filedbIns, dbinstance) {
     app.apiconfig.get('/folder/content/:id', function(req, res) {
         console.log('get someone folder all files.');
         var id = req.params.id;
-        filedbIns.getFilesWithFolderid(dbinstance, id, function(req) {
+        filedbIns.getFilesWithFolderid(dbinstance(), id, function(req) {
             res.json(req)
         });
     });
@@ -68,7 +68,7 @@ function getOneuserNewestFiles(app, filedbIns, dbinstance) {
     app.apiconfig.get('/files/:id', function(req, res) {
         console.log('get someone folder all files.');
         var id = req.params.id;
-        filedbIns.getoneuserNewestFiles(dbinstance, id, function(req) {
+        filedbIns.getoneuserNewestFiles(dbinstance(), id, function(req) {
             res.json(req)
         });
     });
@@ -79,7 +79,7 @@ function deleteFile(app, userdbIns, dbinstance) {
     app.apiconfig.delete('/file/:id', function(req, res) {
         console.log('delete someone file invoke.');
         var id = req.params.id;
-        userdbIns.deleteFile(dbinstance, id, function(req) {
+        userdbIns.deleteFile(dbinstance(), id, function(req) {
             res.json({ 'result': req });
         })
     });

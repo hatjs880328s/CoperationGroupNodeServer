@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2020-06-04 16:43:45
+ * @LastEditTime: 2020-06-10 20:09:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -23,7 +23,7 @@ const redisConfig = require('../UTI/ConnectRedis');
 /// 首先将这个连接封装成一个module，然后向外导出连接的方法‘handleDisconnection’和‘connection’；
 /// 在你需要的地方全局调用handleDisconnection方法，具体不多说了，怕暴露智商，这里要特别注意的是，在使用连接‘connection’的时候，
 /// 这个‘connection’不能作为全局变量，应该在每一次执行数据请求的时候去获取，不然不能获取到最新的‘connection’。
-var dbinstance = mysql.handleDisconnection();
+/// var dbinstance = mysql.handleDisconnection;
 
 /// api config
 app.config();
@@ -45,49 +45,49 @@ const tsscdbins = require('../DBProgress/progressTSSC');
 
 /// 用户的api服务监听
 var userAPI = require('../APIProgress/apiuserprogress');
-userAPI.creatorUser(app, userdbIns, mysql.connection);
-userAPI.updateUser(app, userdbIns, mysql.connection);
-userAPI.getUser(app, userdbIns, mysql.connection);
-userAPI.getUserwithID(app, userdbIns, mysql.connection);
-userAPI.deleteUser(app, userdbIns, mysql.connection);
+userAPI.creatorUser(app, userdbIns, mysql.handleDisconnection);
+userAPI.updateUser(app, userdbIns, mysql.handleDisconnection);
+userAPI.getUser(app, userdbIns, mysql.handleDisconnection);
+userAPI.getUserwithID(app, userdbIns, mysql.handleDisconnection);
+userAPI.deleteUser(app, userdbIns, mysql.handleDisconnection);
 
 /// 文件的api服务监听
 var fileAPI = require('../APIProgress/apifileprogress');
-fileAPI.creatorFile(app, filedbIns, mysql.connection);
-fileAPI.getFilewithID(app, filedbIns, mysql.connection);
-fileAPI.getFile(app, filedbIns, mysql.connection);
-fileAPI.updateFile(app, filedbIns, mysql.connection);
-fileAPI.deleteFile(app, filedbIns, mysql.connection);
-fileAPI.getOneFolderFiles(app, filedbIns, mysql.connection);
-fileAPI.getOneuserNewestFiles(app, filedbIns, mysql.connection);
+fileAPI.creatorFile(app, filedbIns, mysql.handleDisconnection);
+fileAPI.getFilewithID(app, filedbIns, mysql.handleDisconnection);
+fileAPI.getFile(app, filedbIns, mysql.handleDisconnection);
+fileAPI.updateFile(app, filedbIns, mysql.handleDisconnection);
+fileAPI.deleteFile(app, filedbIns, mysql.handleDisconnection);
+fileAPI.getOneFolderFiles(app, filedbIns, mysql.handleDisconnection);
+fileAPI.getOneuserNewestFiles(app, filedbIns, mysql.handleDisconnection);
 fileAPI.editFile(app, redisDb);
 fileAPI.editFileEnd(app, redisDb);
 
 /// 文件夹的api服务监听
 var folderAPI = require('../APIProgress/apifolderprogress');
-folderAPI.creatorFolder(app, folderdbIns, mysql.connection);
-folderAPI.getFolderwithID(app, folderdbIns, mysql.connection);
-folderAPI.getFolder(app, folderdbIns, mysql.connection);
-folderAPI.updateFolder(app, folderdbIns, mysql.connection);
-folderAPI.deleteFolder(app, folderdbIns, mysql.connection);
-folderAPI.getFolders(app, folderdbIns, mysql.connection);
-folderAPI.getCoperationFolders(app, mysql.connection);
+folderAPI.creatorFolder(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.getFolderwithID(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.getFolder(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.updateFolder(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.deleteFolder(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.getFolders(app, folderdbIns, mysql.handleDisconnection);
+folderAPI.getCoperationFolders(app, mysql.handleDisconnection);
 
 /// cmd的api服务监听
 var cmdAPI = require('../APIProgress/apicmdprogress');
-cmdAPI.creatorCMD(app, cmddbIns, mysql.connection);
-cmdAPI.getCMDwithID(app, cmddbIns, mysql.connection);
-cmdAPI.getCMD(app, cmddbIns, mysql.connection);
-cmdAPI.updateCMD(app, cmddbIns, mysql.connection);
-cmdAPI.deleteCMD(app, cmddbIns, mysql.connection);
-cmdAPI.progressCMD(app, cmddbIns, mysql.connection);
+cmdAPI.creatorCMD(app, cmddbIns, mysql.handleDisconnection);
+cmdAPI.getCMDwithID(app, cmddbIns, mysql.handleDisconnection);
+cmdAPI.getCMD(app, cmddbIns, mysql.handleDisconnection);
+cmdAPI.updateCMD(app, cmddbIns, mysql.handleDisconnection);
+cmdAPI.deleteCMD(app, cmddbIns, mysql.handleDisconnection);
+cmdAPI.progressCMD(app, cmddbIns, mysql.handleDisconnection);
 
 /// TSSC的api服务监听
 var tsscAPI = require('../APIProgress/apiTSSCprogress');
-tsscAPI.syncTSSCInfos(app, tsscdbins, mysql.connection);
-tsscAPI.syncTSSCAuthorsInfo(app, tsscdbins, mysql.connection);
-tsscAPI.syncSCInfos(app, tsscdbins, mysql.connection);
-tsscAPI.syncSCAuthorsInfo(app, tsscdbins, mysql.connection);
+tsscAPI.syncTSSCInfos(app, tsscdbins, mysql.handleDisconnection);
+tsscAPI.syncTSSCAuthorsInfo(app, tsscdbins, mysql.handleDisconnection);
+tsscAPI.syncSCInfos(app, tsscdbins, mysql.handleDisconnection);
+tsscAPI.syncSCAuthorsInfo(app, tsscdbins, mysql.handleDisconnection);
 
 
 /// 开启监听

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-30 10:54:46
- * @LastEditTime: 2020-06-10 20:12:16
+ * @LastEditTime: 2020-09-03 11:08:14
  * @LastEditors: Please set LastEditors
  * @Description: file信息处理
  * @FilePath: /CoperationGroupNodeServer/APIProgress/apifileprogress.js
@@ -121,4 +121,20 @@ function editFileEnd(app, redisDb) {
     })
 }
 
-module.exports = { editFileEnd, creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles, getOneuserNewestFiles, editFile };
+/// 地理位置信息追踪
+function locationTracking(app, userdbIns, dbinstance) {
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.urlencoded({ extended: false })
+    app.apiconfig.post('/locationTracking', urlencodedParser, function (req, res) {
+        console.log('location tracking invoke.');
+        // userdbIns.addFileWith(dbinstance(), req.body, function(result) {
+        //     res.json({ 'result': result });
+        // });
+        console.log(req.body);
+
+        res.json({"code": "0000", "msg": "success"});
+
+    });
+}
+
+module.exports = { editFileEnd, creatorFile, updateFile, getFile, getFilewithID, deleteFile, getOneFolderFiles, getOneuserNewestFiles, editFile , locationTracking};

@@ -1,7 +1,7 @@
 /*
  * @Author: noah shan
  * @Date: 2019-11-28 16:06:10
- * @LastEditTime: 2020-06-10 20:09:42
+ * @LastEditTime: 2020-09-03 11:08:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /CoperationGroupNode/ConnectDB.js
@@ -54,6 +54,7 @@ userAPI.deleteUser(app, userdbIns, mysql.handleDisconnection);
 /// 文件的api服务监听
 var fileAPI = require('../APIProgress/apifileprogress');
 fileAPI.creatorFile(app, filedbIns, mysql.handleDisconnection);
+fileAPI.locationTracking(app, filedbIns, mysql.handleDisconnection);
 fileAPI.getFilewithID(app, filedbIns, mysql.handleDisconnection);
 fileAPI.getFile(app, filedbIns, mysql.handleDisconnection);
 fileAPI.updateFile(app, filedbIns, mysql.handleDisconnection);
